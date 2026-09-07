@@ -33,6 +33,18 @@ def git_commit() -> str:
         return "unknown"
 
 
+def dvc_hash() -> str:
+    dvc_file = config.REPO_ROOT / "data" / "raw.dvc"
+    if dvc_file.exists():
+        try:
+            for line in dvc_file.read_text().splitlines():
+                if "md5:" in line:
+                    return line.split("md5:")[1].strip()
+        except Exception:
+            pass
+    return "unknown"
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="ITCS355 Lab 1 — reproducible training")
     p.add_argument("--n-estimators", type=int, default=200)
@@ -69,6 +81,7 @@ def main() -> None:
         # Provenance. This is what makes the metric traceable.
         mlflow.set_tags({
             "git_commit": git_commit(),
+            "dvc_hash": dvc_hash(),
             "data_fingerprint": fingerprint,
             "split_strategy": "group_by_machine_id",
             "n_train_rows": len(train_df),

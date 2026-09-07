@@ -65,11 +65,20 @@ def test_identifier_is_unique(df):
 # --- property tests: about the splitting logic --------------------------------------
 
 def test_no_machine_leaks_across_splits(df):
+    """Ensure no identifier (machine_id or reading_id) appears in more than one split."""
     train, val, test = data.split(df, seed=42)
-    tr, va, te = (set(p[data.GROUP]) for p in (train, val, test))
-    assert not tr & va, f"machines in both train and val: {sorted(tr & va)[:5]}"
-    assert not tr & te, f"machines in both train and test: {sorted(tr & te)[:5]}"
-    assert not va & te, f"machines in both val and test: {sorted(va & te)[:5]}"
+
+    # 1. Group identifier leakage check (machine_id)
+    tr_m, va_m, te_m = (set(p[data.GROUP]) for p in (train, val, test))
+    assert not tr_m & va_m, f"machines in both train and val: {sorted(tr_m & va_m)[:5]}"
+    assert not tr_m & te_m, f"machines in both train and test: {sorted(tr_m & te_m)[:5]}"
+    assert not va_m & te_m, f"machines in both val and test: {sorted(va_m & te_m)[:5]}"
+
+    # 2. Row identifier leakage check (reading_id)
+    tr_id, va_id, te_id = (set(p[data.ID]) for p in (train, val, test))
+    assert not tr_id & va_id, f"reading_ids in both train and val: {sorted(tr_id & va_id)[:5]}"
+    assert not tr_id & te_id, f"reading_ids in both train and test: {sorted(tr_id & te_id)[:5]}"
+    assert not va_id & te_id, f"reading_ids in both val and test: {sorted(va_id & te_id)[:5]}"
 
 
 def test_split_is_deterministic_given_seed(df):
