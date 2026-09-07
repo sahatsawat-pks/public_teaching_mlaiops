@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -23,6 +24,9 @@ from src import config, data, seeds
 
 
 def git_commit() -> str:
+    commit = os.environ.get("GIT_COMMIT")
+    if commit and commit.strip() and commit != "unknown":
+        return commit.strip()
     try:
         out = subprocess.run(
             ["git", "rev-parse", "HEAD"],

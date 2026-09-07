@@ -17,27 +17,26 @@ whether a stranger can reproduce it is.
 
 ## Reproduce
 
+Assuming Docker is installed (no local Python, virtual environment, or cloud credentials required), run:
+
 ```bash
 make reproduce
 ```
 
 expected test_roc_auc: 0.8480 ± 0.0100
 
-Runtime: about 40 seconds on 4 cores. No cloud account or credentials needed for this command —
-that is deliberate, and it is why a grader can run it.
+Runtime: about 40 seconds on 4 cores. The container runs entirely self-contained, mounting local directories for data and reports.
 
 ---
 
 ## The problem
 
-240 machines, 25 readings each, 6 sensor features, binary target `failed_within_7d` with a
-positive rate near 12%.
+Predicting machine failure within 7 days from sensor readings.
 
-Machines have persistent characteristics — a hot-running machine reads hot in every row. So the
-train/validation/test split is **grouped by `machine_id`**: every reading from one machine lands
-in exactly one partition. Splitting row-wise instead lets the model memorise the machine and
-reports a validation score that will never survive production. `tests/test_data.py` asserts this
-property holds, and Lab 4 turns it into a CI gate.
+### The data and where it comes from
+- **Dataset**: 240 industrial machines, 25 time-series sensor readings each (6,000 rows total), across 6 sensor features (`temp_c`, `vibration_mm_s`, `pressure_kpa`, `hours_since_service`, `load_pct`, `ambient_humidity`) with binary classification target `failed_within_7d` (~12% positive failure rate).
+- **Source & Versioning**: Versioned and tracked in remote cloud object storage via DVC (`data/raw.dvc` stored at `${BLOB_URI}/dvc`), and can be deterministically reproduced locally with `make data` (`python scripts/make_dataset.py --seed 20260101`).
+- **Grouped Split**: Machines possess persistent physical characteristics. The train/val/test split is strictly **grouped by `machine_id`** in `src/data.py` (verified by `tests/test_data.py`) so no readings from any single machine cross split boundaries, preventing data leakage.
 
 Bringing your own dataset is allowed. Replace `scripts/make_dataset.py`, update the schema in
 `src/data.py`, and keep every test passing.
@@ -70,6 +69,20 @@ make test                           # 10 tests, all passing
 ```
 
 Post your `make cloud-check` output in the course channel before Session 1.
+
+---
+
+## MLflow Tracking & UI
+
+Every training run automatically logs hyperparameters, validation/test metrics separately, the DVC data version hash, Git commit SHA, and serialized model artifacts.
+
+Launch the local tracking dashboard:
+
+```bash
+mlflow ui --backend-store-uri sqlite:///reports/mlflow.db
+```
+
+Open [http://localhost:5000](http://localhost:5000) in your browser to inspect experiment runs, compare metrics, and view logged model artifacts.
 
 ---
 
