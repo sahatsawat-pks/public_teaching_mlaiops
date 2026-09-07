@@ -27,12 +27,16 @@ RUN useradd --create-home --uid 10001 runner
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONPATH=/app
+    PYTHONPATH=/app \
+    GIT_PYTHON_REFRESH=quiet
 
 # Copy only the compiled/installed packages from the builder stage
 COPY --from=builder /install /usr/local
 
 WORKDIR /app
+
+# Pre-create directories and ensure non-root runner has full write permissions for mlruns
+RUN mkdir -p /app/reports /app/mlruns && chmod -R 777 /app && chown -R runner:runner /app
 
 # Copy application code with non-root ownership
 COPY --chown=runner:runner src/ ./src/
