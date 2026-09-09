@@ -15,9 +15,9 @@ Session 1 has NO drill and NO debrief: Drill 1 is at the start of Session 2 and 
 is no previous lab to debrief. That frees the first 35 minutes, which this deck spends
 on the cold open. Sessions 2-5 use the standard shape.
 
-PREPARE BEFORE THIS SESSION: the peer notebook for the cold open (slide 3). It does not
-ship with this repository. One notebook, a stated metric, and just enough missing —
-unpinned deps, an unstated seed, a local file path — that reproducing it fails honestly.
+PREPARE BEFORE THIS SESSION: instructor/session-01-cold-open/ has the peer notebook, the
+answer key, and spread.py for the debrief reveal. Hand the notebook out through the LMS —
+do not link it in the course channel beforehand. Run spread.py once on the room machine.
 -->
 
 # Session 1
@@ -64,13 +64,14 @@ You will be given a notebook and the number its author says it produces.
 Rules: you may read anything, you may not message the author, and you stop at 25 minutes whether or not it worked.
 
 <!--
-Most pairs fail, and that is the point — do not rescue them. Circulate and note WHICH
-link broke for each pair; you will use those on the next slide. Typical failures, in
-frequency order: unpinned library version, unstated seed, an absolute path, a data file
-that differs from the one described.
+Nobody reproduces it; ten honest runs land between 0.93 and 0.98, never twice the same.
+Do not rescue anyone. Circulate and note WHICH fault each pair hits first — the next
+slide lands harder when the categories come out of the room rather than off the screen.
 
-If a pair succeeds early, give them the second copy with a different library version
-pinned and ask them to explain the delta.
+Some pairs will get 0.961 and believe they succeeded. That is the most useful outcome
+in the room, and the debrief takes it away from them.
+
+Full answer key, timing and debrief script: instructor/session-01-cold-open/README.md
 -->
 
 ---
@@ -87,6 +88,19 @@ We will collect these on the board. Every failure lands in one of four places:
 | 4 | **Randomness** | a seed nobody set |
 
 You just spent 25 minutes on what a grader will spend 5 minutes on with your Lab 1 repository. The difference is that they will not be trying to help you.
+
+<!--
+Run instructor/session-01-cold-open/spread.py --runs 10 on screen here. Ten runs, none
+of them 0.965 — the author could not reproduce their own number either. They were never
+lying; they simply never checked.
+
+Then the last column: grouped split, ~0.76. Let the room find why. The label belongs to
+the machine, the same machine sits on both sides of the split, and the model was
+recognising machines rather than predicting failure.
+
+Land it: the number was inflated by 0.20 before it was unstable by 0.04 — and every one
+of you would have shipped it. Hold this back until after the four locks.
+-->
 
 ---
 
