@@ -59,7 +59,8 @@ Draw the evidence questions from each student's own submission:
 
 Concept questions cover technical debt, container layering, digest versus tag pinning, and group
 leakage. Three marks total, all CLO1 — half concepts, half evidence, in the shape set out in
-[`drills/README.md`](drills/README.md). The paper is [`drills/drill-01.md`](drills/drill-01.md).
+[`drills/README.md`](drills/README.md). The paper itself is in the private instructor
+repository — this one is public, and a pre-read concept question is not a concept question.
 
 Note that the drill does **not** ask "how did you choose your tolerance", even though it is the
 obvious question. The README's guidance on tolerance is wrong — it points at the spread across

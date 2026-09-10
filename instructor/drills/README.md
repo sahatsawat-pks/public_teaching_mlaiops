@@ -1,7 +1,14 @@
 # In-class drills
 
-**Instructor material. Not for distribution — this directory is excluded from the published
-site and the whole `instructor/` tree should be deleted before the repository is shared.**
+**This file documents how the drills are designed. The papers themselves are not here.**
+
+This repository is public. Drill questions and answers live in the private instructor
+repository (`../../../itcs355-instructor-private/drills/`), which has no git remote. Section A
+is concept questions, and a student who reads them beforehand is sitting a different exam.
+
+> **Exposure on record.** `drill-05.md` was committed here on 6 September 2026 with its model
+> answers and was publicly readable until removed. Removal does not undo publication. Treat
+> Drill 5's Section A as burned and rewrite those three questions before the final week.
 
 Five drills, 3 marks each, 15 marks total. One at the start of each session, 15 minutes,
 closed-book except for the student's own repository.
@@ -33,13 +40,13 @@ slot that follows; do not carry a stack of drills home.
 
 ## Status
 
-| Drill | Session | Written |
-|---|---|---|
-| 1 | 2 | [`drill-01.md`](drill-01.md) |
-| 2 | 3 | not yet written |
-| 3 | 4 | not yet written |
-| 4 | 5 | not yet written |
-| 5 | Final week | [`drill-05.md`](drill-05.md) |
+All five papers are written and live in the private instructor repository, alongside
+student-facing question papers for LMS upload.
 
-Drill 5 was written first because Session 5 is the newest material. The others follow the
-same shape.
+| Drill | Held at start of | Covers |
+|---|---|---|
+| 1 | Session 2 | Session 1 + Lab 1 — reproducibility, containers, data versioning |
+| 2 | Session 3 | Session 2 + Lab 2 — tracking, registries, lineage |
+| 3 | Session 4 | Session 3 + Lab 3 — serving, latency, release safety |
+| 4 | Session 5 | Session 4 + Lab 4 — testing, drift, incident response |
+| 5 | Final week | Session 5 + Lab 5 — LLM operations, IAM, cost |
