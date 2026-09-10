@@ -21,8 +21,8 @@ protect it when running late by cutting the autoscaling slide, not the drill.
 
 | Time | What |
 |---|---|
-| 0:00–0:15 | **Drill 2** — 3 marks |
-| 0:15–0:35 | Lab 2 debrief |
+| 0:00–0:10 | **Drill 2** — 2 questions, 3 marks |
+| 0:10–0:35 | Lab 2 debrief |
 | 0:35–1:15 | Serving patterns, latency, release safety |
 | 1:15–1:30 | Break |
 | 1:30–2:15 | Live build — deploy an endpoint, then break it |

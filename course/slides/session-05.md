@@ -23,8 +23,8 @@ incomplete monitoring.
 
 | Time | What |
 |---|---|
-| 0:00–0:15 | **Drill 4** — 3 marks |
-| 0:15–0:35 | Lab 4 debrief |
+| 0:00–0:10 | **Drill 4** — 2 questions, 3 marks |
+| 0:10–0:35 | Lab 4 debrief |
 | 0:35–1:25 | Managed platforms, identity, and the shape of a cloud bill |
 | 1:25–1:50 | **`make llm-gate` on screen** — it fails, and we read why |
 | 1:50–2:15 | Cost teardown of a running service |

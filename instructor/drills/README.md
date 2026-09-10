@@ -10,33 +10,36 @@ is concept questions, and a student who reads them beforehand is sitting a diffe
 > answers and was publicly readable until removed. Removal does not undo publication. Treat
 > Drill 5's Section A as burned and rewrite those three questions before the final week.
 
-Five drills, 3 marks each, 15 marks total. One at the start of each session, 15 minutes,
-closed-book except for the student's own repository.
+Five drills, 3 marks each, 15 marks total. One at the start of each session, **two questions,
+10 minutes**, closed-book except for the student's own repository.
 
 ## The shape, and why
 
-Each drill is **half concepts, half evidence**.
+Two questions, weighted 2 and 1.
 
-| | Marks | Drawn from | Purpose |
-|---|---|---|---|
-| Section A — concepts | 1.5 | the previous session | did they understand it |
-| Section B — evidence | 1.5 | **their own lab submission** | did they do it themselves |
+| | Marks | Drawn from | Purpose | Marking cost |
+|---|---|---|---|---|
+| **Q1 — concepts** | 2 | the previous session | did they understand it | fast: one model answer, applied to every script |
+| **Q2 — evidence** | 1 | **their own lab submission** | did they do it themselves | slow: their repository has to be open |
 
-Section B is the anti-copying mechanism and it is the reason the drills exist at all. The
-questions cannot be answered from a borrowed repository, because they ask for numbers and
-decisions that are specific to the student's own submission: their p95, their run ID, the
-permission they removed, the case in their golden set that failed. A student who cloned a
-friend's lab can pass Section A and will fail Section B.
+Q2 is the anti-copying mechanism and the reason the drills exist at all. It cannot be answered
+from a borrowed repository, because it asks for a number or a decision specific to the student's
+own submission: the parameter they varied, the permission they removed, the case in their golden
+set that failed. A student who cloned a friend's lab can answer Q1 and cannot answer Q2.
 
-This means **Section B has to be prepared per student**, from their submitted repository,
-before the session. Budget 2 minutes per student. It is the cost of the mechanism, and it is
-lower than the cost of not being able to tell who did the work.
+**Why two questions and not six.** A cohort of 40 makes six questions 240 answers a week, and the
+grading does not fit in the week. Two makes 80, and only one of the two needs a repository open.
+The mechanism survives at a sixth of the cost, because one uncopyable question is as uncopyable
+as three.
 
 ## Marking
 
-Half a mark per question, six questions. No partial credit within a question — the answers
-are short and specific enough that they are right or they are not. Mark during the debrief
-slot that follows; do not carry a stack of drills home.
+Q1 carries partial credit — it asks for two things, and one of them is often right on its own.
+Q2 does not: the answer is a specific value from their own work, so it matches their repository
+or it does not.
+
+Mark during the debrief slot that follows. Q1 goes quickly against the model answer; Q2 is the
+one to prepare for, and most of it can be checked from their repository in advance.
 
 ## Status
 

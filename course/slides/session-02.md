@@ -7,8 +7,8 @@ title: ITCS355 Session 2 — Pipelines, features, and managed training
 
 <!--
 Teaching deck for Session 2. Standard session shape: drill, debrief, concepts, break,
-live build, timed exercise, handover. Drill 1 questions are in
-instructor/drills/ — do not paste them into this file, it is public.
+live build, timed exercise, handover. Drill 1 questions live in the private instructor
+repository — do not paste them into this file, it is public.
 -->
 
 # Session 2
@@ -24,8 +24,8 @@ Reading due today: Google Cloud, *MLOps: Continuous delivery and automation pipe
 
 | Time | What |
 |---|---|
-| 0:00–0:15 | **Drill 1** — 3 marks |
-| 0:15–0:35 | Lab 1 debrief, in public, without names |
+| 0:00–0:10 | **Drill 1** — 2 questions, 3 marks |
+| 0:10–0:35 | Lab 1 debrief, in public, without names |
 | 0:35–1:15 | Tracking, registries, lineage |
 | 1:15–1:30 | Break |
 | 1:30–2:15 | Live build — the tracking server, and a budgeted tuning contest |
@@ -34,9 +34,9 @@ Reading due today: Google Cloud, *MLOps: Continuous delivery and automation pipe
 
 ---
 
-## Drill 1 — 15 minutes
+## Drill 1 — 10 minutes
 
-Three marks. Half concepts from Session 1, half evidence from **your own** Lab 1 submission.
+Two questions, three marks. One concept question from Session 1, and one worth a mark that only **your own** Lab 1 submission can answer.
 
 You may open your repository. You may not open anyone else's.
 

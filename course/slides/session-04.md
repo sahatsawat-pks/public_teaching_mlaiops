@@ -24,8 +24,8 @@ Reading due today: Breck et al., *The ML Test Score* (2017)
 
 | Time | What |
 |---|---|
-| 0:00–0:15 | **Drill 3** — 3 marks |
-| 0:15–0:35 | Lab 3 debrief |
+| 0:00–0:10 | **Drill 3** — 2 questions, 3 marks |
+| 0:10–0:35 | Lab 3 debrief |
 | 0:35–1:15 | Testing ML, drift, and what an alert is for |
 | 1:15–1:30 | Break |
 | 1:30–2:00 | Live build — a data test that fails the build |

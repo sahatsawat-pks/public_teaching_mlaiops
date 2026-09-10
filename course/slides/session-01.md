@@ -262,6 +262,6 @@ Four graded decisions:
 
 - [ ] Lab 1 pushed and reproducing from a **fresh clone**
 - [ ] Reading: Google Cloud, *MLOps: Continuous delivery and automation pipelines in ML*
-- [ ] Drill 1 opens Session 2 — 3 marks, and half of it is evidence from your own Lab 1
+- [ ] Drill 1 opens Session 2 — two questions, 3 marks, and one of them can only be answered from your own Lab 1
 
 Bring the thing that broke. Someone else has the same problem and has not said so.
