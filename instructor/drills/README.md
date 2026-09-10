@@ -35,7 +35,7 @@ slot that follows; do not carry a stack of drills home.
 
 | Drill | Session | Written |
 |---|---|---|
-| 1 | 2 | evidence prompts in `../RUBRIC-lab1.md`, full drill not yet written |
+| 1 | 2 | [`drill-01.md`](drill-01.md) |
 | 2 | 3 | not yet written |
 | 3 | 4 | not yet written |
 | 4 | 5 | not yet written |
