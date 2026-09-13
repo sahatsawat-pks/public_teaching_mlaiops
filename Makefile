@@ -22,7 +22,16 @@ cloud-check: ## Resolve the eight capability slots
 	python scripts/cloud_check.py
 
 data: ## Generate the default dataset (deterministic)
-	python scripts/make_dataset.py --seed $(SEED)
+	@if [ -f data/raw/sensors.csv ]; then \
+		echo "data/raw/sensors.csv already exists"; \
+	elif command -v python3 >/dev/null 2>&1 && python3 -c "import pandas, numpy" 2>/dev/null; then \
+		python3 scripts/make_dataset.py --seed $(SEED); \
+	elif command -v python >/dev/null 2>&1 && python -c "import pandas, numpy" 2>/dev/null; then \
+		python scripts/make_dataset.py --seed $(SEED); \
+	else \
+		echo "Local Python missing numpy/pandas. Generating data inside Docker..."; \
+		docker run --rm -v "$$PWD:/app" -w /app python:3.11-slim bash -c "pip install --quiet numpy pandas && python scripts/make_dataset.py --seed $(SEED)"; \
+	fi
 
 test: ## Run data contract and split property tests
 	pytest -q tests/
@@ -41,6 +50,7 @@ image-push: image ## Push to CONTAINER_REGISTRY via your adapter
 	print(get_adapter(config.load()).push_image(\"$(IMAGE):$(TAG)\"))"
 
 reproduce: data image ## THE ONE COMMAND. Grader runs this.
+	@mkdir -p reports && (chmod 777 reports 2>/dev/null || true)
 	docker run --rm \
 	  -v "$$PWD/data:/app/data:ro" \
 	  -v "$$PWD/reports:/app/reports" \
