@@ -4,6 +4,8 @@ cloud.env
 # DVC manages these; Git must not.
 data/raw/
 data/_local_blob/
+data/_aws_blob/
+data/_azure_blob/
 .dvc/cache/
 
 # Local tracking store

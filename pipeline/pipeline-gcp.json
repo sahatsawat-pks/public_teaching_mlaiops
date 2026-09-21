@@ -1,0 +1,176 @@
+{
+  "pipelineSpec": {
+    "pipelineInfo": {
+      "name": "itcs355-training-pipeline",
+      "description": "ITCS355 managed training and evaluation pipeline"
+    },
+    "root": {
+      "dag": {
+        "tasks": {
+          "task-ingest": {
+            "taskInfo": {
+              "name": "ingest"
+            },
+            "componentRef": {
+              "name": "comp-ingest"
+            }
+          },
+          "task-validate": {
+            "taskInfo": {
+              "name": "validate"
+            },
+            "componentRef": {
+              "name": "comp-validate"
+            },
+            "dependentTasks": [
+              "task-ingest"
+            ]
+          },
+          "task-train": {
+            "taskInfo": {
+              "name": "train"
+            },
+            "componentRef": {
+              "name": "comp-train"
+            },
+            "dependentTasks": [
+              "task-validate"
+            ]
+          },
+          "task-evaluate": {
+            "taskInfo": {
+              "name": "evaluate"
+            },
+            "componentRef": {
+              "name": "comp-evaluate"
+            },
+            "dependentTasks": [
+              "task-train"
+            ]
+          },
+          "task-register": {
+            "taskInfo": {
+              "name": "register"
+            },
+            "componentRef": {
+              "name": "comp-register"
+            },
+            "dependentTasks": [
+              "task-evaluate"
+            ],
+            "triggerPolicy": {
+              "condition": "gate_decision == 'pass'",
+              "strategy": "TRIGGER_WHEN_ALL_PREDICATES_MET"
+            }
+          },
+          "task-deploy_staging": {
+            "taskInfo": {
+              "name": "deploy_staging"
+            },
+            "componentRef": {
+              "name": "comp-deploy_staging"
+            },
+            "dependentTasks": [
+              "task-register"
+            ]
+          }
+        }
+      }
+    },
+    "components": {
+      "comp-ingest": {
+        "executorLabel": "exec-ingest"
+      },
+      "comp-validate": {
+        "executorLabel": "exec-validate"
+      },
+      "comp-train": {
+        "executorLabel": "exec-train"
+      },
+      "comp-evaluate": {
+        "executorLabel": "exec-evaluate"
+      },
+      "comp-register": {
+        "executorLabel": "exec-register"
+      },
+      "comp-deploy_staging": {
+        "executorLabel": "exec-deploy_staging"
+      }
+    },
+    "deploymentSpec": {
+      "executors": {
+        "exec-ingest": {
+          "container": {
+            "image": "asia-southeast1-docker.pkg.dev/itcs355-6688249/itcs355/itcs355:latest",
+            "command": [
+              "python",
+              "scripts/make_dataset.py"
+            ]
+          }
+        },
+        "exec-validate": {
+          "container": {
+            "image": "asia-southeast1-docker.pkg.dev/itcs355-6688249/itcs355/itcs355:latest",
+            "command": [
+              "pytest",
+              "-q",
+              "tests/test_data.py"
+            ]
+          }
+        },
+        "exec-train": {
+          "container": {
+            "image": "asia-southeast1-docker.pkg.dev/itcs355-6688249/itcs355/itcs355:latest",
+            "command": [
+              "python",
+              "-m",
+              "src.train",
+              "--metrics-out",
+              "/outputs/metrics.json"
+            ],
+            "resources": {
+              "machineType": "n1-standard-4"
+            }
+          }
+        },
+        "exec-evaluate": {
+          "container": {
+            "image": "asia-southeast1-docker.pkg.dev/itcs355-6688249/itcs355/itcs355:latest",
+            "command": [
+              "python",
+              "scripts/evaluation_gate.py",
+              "--metrics",
+              "/outputs/metrics.json"
+            ]
+          }
+        },
+        "exec-register": {
+          "container": {
+            "image": "asia-southeast1-docker.pkg.dev/itcs355-6688249/itcs355/itcs355:latest",
+            "command": [
+              "python",
+              "scripts/register.py"
+            ]
+          }
+        },
+        "exec-deploy_staging": {
+          "container": {
+            "image": "asia-southeast1-docker.pkg.dev/itcs355-6688249/itcs355/itcs355:latest",
+            "command": [
+              "python",
+              "scripts/deploy.py",
+              "--target",
+              "staging"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "labels": {
+    "course": "itcs355",
+    "student": "itcs355-6688249",
+    "lab": "5"
+  },
+  "schedule": "0 2 * * 0"
+}

@@ -1,18 +1,16 @@
-# Post-mortem — Temperature Sensor Calibration Bias Incident
+# Post-mortem — Temperature Sensor Calibration Offset Incident
 
-Five lines. Lab 4 grades lines 3 and 4 hardest.
+**What fired:**  
+Drift alert on `temp_c` with PSI = 0.412 (> threshold 0.20), KS = 0.384, at 2026-09-21 10:15:00 UTC.
 
-**What fired:**
-Drift alert on feature `temp_c` with PSI = 0.412 (exceeding threshold 0.20) and KS statistic = 0.384 at 2026-09-21 10:15:02 UTC.
+**True cause:**  
+Data drift caused by an upstream sensor re-calibration or sudden shift in plant ambient temperature (+6°C bias on all raw telemetry).
 
-**True cause:**
-Upstream data drift caused by sensor re-calibration error or plant ventilation offset, introducing a systematic +6°C bias into raw incoming telemetry while underlying equipment remained physically sound.
+**Retrain, roll back, or no action — and why:**  
+No action on the model; do NOT retrain and do NOT roll back. The model is functioning correctly; the fault is upstream data corruption. Retraining on corrupted +6°C biased data would bake bad sensor offsets into the weights and permanently destroy model accuracy. Fix the upstream calibration and backfill data.
 
-**Retrain, roll back, or no action — and why:**
-No action on the model; do NOT retrain and do NOT roll back. The model inference logic is healthy; the failure is upstream data corruption. Retraining on corrupted data would bake false sensor biases permanently into the decision trees, destroying predictive fidelity once sensors are fixed. The required action is to hold the deployment, recalibrate the upstream sensor producer, and backfill clean telemetry.
+**What this would have cost if unnoticed for a week:**  
+Over-predicting machine failures by ~35% on healthy machines, triggering unnecessary physical maintenance dispatches costing ~140,000 THB in false alarms.
 
-**What this would have cost if unnoticed for a week:**
-An estimated 35% artificial surge in machine failure alarms across 240 monitored machines, resulting in approximately 140,000 THB in unnecessary emergency technician callouts and production downtime for healthy hardware.
-
-**How to prevent or detect it faster:**
-Deploy an upstream data contract range-assertion on raw sensor inputs and monitor differential telemetry (surface temp minus ambient temp) at the ingestion gateway before data enters feature storage.
+**How to prevent or detect it faster:**  
+Add an upstream data contract range-check on temperature delta between plant intake and exhaust to reject unphysical sudden offsets before data lands in the feature store.
