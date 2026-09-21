@@ -46,17 +46,18 @@ jobs:
           service_account: ${{ secrets.GCP_DEPLOY_SA }}
       - run: gcloud auth configure-docker ${{ vars.REGION }}-docker.pkg.dev
 
-- name: Push image
-  run: |
-    python -c "from src import config; from cloudlayer.factory import get_adapter; \
-      print(get_adapter(config.load()).push_image('itcs355-serve:${{ github.sha }}'))"
+      - name: Push image
+        run: |
+          python -c "from src import config; from cloudlayer.factory import get_adapter; \
+            print(get_adapter(config.load()).push_image('itcs355-serve:${{ github.sha }}'))"
 
-- name: Deploy to staging
-  run: |
-    python -c "from src import config; from cloudlayer.factory import get_adapter; \
-      adapter=get_adapter(config.load()); \
-      adapter.deploy('itcs355-serve:${{ github.sha }}', 'itcs355-serve-staging', 'n1-standard-2')"
+      - name: Deploy to staging
+        run: |
+          python -c "from src import config; from cloudlayer.factory import get_adapter; \
+            adapter=get_adapter(config.load()); \
+            adapter.deploy('itcs355-serve:${{ github.sha }}', 'itcs355-serve-staging', 'n1-standard-2')"
 
-- name: Smoke test
-  run: |
-    python scripts/smoke_test.py --endpoint itcs355-serve-staging
+      - name: Smoke test
+        run: |
+          python scripts/smoke_test.py --endpoint itcs355-serve-staging
+

@@ -51,7 +51,7 @@ def main() -> int:
 
     client = mlflow.tracking.MlflowClient()
     mv = client.get_model_version(model_name, version)
-    print(f"\nModel registered successfully!")
+    print("\nModel registered successfully!")
     print(f"  Name:    {mv.name}")
     print(f"  Version: {mv.version}")
     print(f"  Stage:   {mv.current_stage}")
