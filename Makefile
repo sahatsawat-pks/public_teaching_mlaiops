@@ -101,6 +101,7 @@ serve: ## Run the inference service locally on :8080
 	MODEL_PATH=reports/model.joblib MODEL_VERSION=local uvicorn service.app:app --port 8080
 
 serve-image: ## Build the serving image
+	@if [ ! -f reports/model.joblib ]; then python scripts/export_model.py --out reports/model.joblib; fi
 	docker buildx build --platform $(PLATFORM) -f service/Dockerfile.serve -t itcs355-serve:$(TAG) --load .
 
 serve-image-push: serve-image ## Push the serving image to CONTAINER_REGISTRY via your adapter

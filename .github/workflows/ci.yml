@@ -72,6 +72,12 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Generate dataset and model artifact
+        run: |
+          python scripts/make_dataset.py
+          python -m src.train --metrics-out reports/metrics.json
+          python scripts/export_model.py --out reports/model.joblib
+
       - name: Build training image
         run: docker buildx build --platform linux/amd64 -t itcs355:${{ github.sha }} --load .
 
@@ -80,9 +86,6 @@ jobs:
 
       - name: Integration test
         run: |
-          python scripts/make_dataset.py
-          python -m src.train --metrics-out reports/metrics.json
-          python scripts/export_model.py --out reports/model.joblib
           docker run -d --rm --name svc -p 8080:8080 \
             -v "$PWD/reports:/app/reports:ro" \
             -e MODEL_PATH=/app/reports/model.joblib \
